@@ -1,11 +1,12 @@
 import { React, useState } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-
 
 export const Login = () => {
     const [matricule, setMatricule] = useState('');
     const [mdp, setMdp] = useState('');
+    const navigate = useNavigate();
+
 
 
 
@@ -19,7 +20,10 @@ export const Login = () => {
         // version.then
         axios.post(url, body)
             .then(data => {
-                console.log(data)
+                if (data.data.success) {
+                    sessionStorage.setItem('token', data.data.token)
+                    navigate('/Questions')
+                }
             });
 
     }
